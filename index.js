@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 
 const app = express();
@@ -31,6 +31,13 @@ async function run() {
       const products= await cursor.toArray();
       res.send(products);
     });
+    //get data important
+    app.get('/products/:id',async (req,res)=>{
+      const id=req.params.id;
+      const objectId = new ObjectId(id);
+      const product = await productsCollection.findOne({ _id: objectId });
+      res.send(product)
+    })
     app.get("/", (req, res) => {
       res.send("Welcome Review-log Server");
     });

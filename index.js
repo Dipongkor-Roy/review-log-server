@@ -22,6 +22,11 @@ const client = new MongoClient(uri, {
     // const productsCollection = database.collection("products");
 async function run() {
   try {
+    app.use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      // other CORS headers if needed
+      next();
+    });
     const productsCollection = client
       .db("review-log")
       .collection("products");
